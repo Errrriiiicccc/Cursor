@@ -113,7 +113,7 @@ This separation allows workflows to move between repositories and allows models 
 The workstream will preserve the following high-level progression:
 
 1. Understand the request and the existing project.
-2. Establish an approved specification and objective completion criteria.
+2. Establish an authorized specification and objective completion criteria. Authorization means that the specification has passed the approval gates applicable under the active operating policy; it does not require the same human approval for every category of work.
 3. Shape the work into bounded implementation units.
 4. Implement and collect validation evidence.
 5. Independently review the result against intent and system behavior.
@@ -185,4 +185,6 @@ Future integration decisions may refine terminology, combine responsibilities, a
 
 ## Follow-up
 
-A separate integration plan will translate this decision into repository structures, workflow mechanics, agent interactions, schemas, validation commands, and adoption stages. During that work, minor refinements to this design are acceptable when recorded explicitly, but the design invariants above remain the checkpoint against which those refinements will be evaluated.
+The [Agent-Assisted Development Operating Model Baseline](../planning/0001-operating-model-baseline.md) records the authoritative business and operating context that constrains integration planning.
+
+A separate integration plan will translate this decision and that baseline into repository structures, workflow mechanics, agent interactions, schemas, validation commands, and adoption stages. During that work, minor refinements to this design are acceptable when recorded explicitly, but the design invariants above remain the checkpoint against which those refinements will be evaluated.
