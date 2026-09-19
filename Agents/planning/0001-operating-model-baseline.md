@@ -216,7 +216,18 @@ Until resolved, implementation workers receive no discretion to establish these 
 These are the remaining owner-level questions for integration planning:
 
 1. **Mandatory approval timing:** The design decision already requires approval or escalation for ambiguous product behavior, architectural changes, security-sensitive behavior, authentication or authorization, destructive data changes, public interface changes, and material compatibility tradeoffs. For which of these may a reversible prototype be produced before owner approval, and which must stop before any implementation?
+
+Ans: A reversible prototype should in almost all cases be created, with the ambiguitiy called out explicitly within the prototype. This allows for easier iteration.
+
 2. **Additional specification checkpoints:** Beyond the mandatory categories above, what characteristics should trigger explicit owner approval of a specification before implementation begins? This is the unresolved middle ground between approving every task and allowing every ordinary task to proceed under the active policy.
+
+Ans: I genuinely just do not know. We should attempt to make a very specific approval checkpoint guide, and from that, for each of the checkpoints we can adjust based on:
+
+- if there are too many approvals being asked for
+- if there are not enough approvals being asked for
+
 3. **Ordinary completion authority:** During the initial personal-use phase, does the owner need to approve every otherwise-complete workstream, or is review visibility sufficient when all acceptance criteria and controls have been satisfied?
+
+Ans: If all acceptance criteria have been met, and controls have been satisfied, then the only review necessary is before the merge with main. At this point, the dev may take it upon themselves to manually review, or even get an agent to perform analysis with them.
 
 These questions should be answered in this document during the next collaborative revision. New questions should be added only when they require owner context under the question policy above.
