@@ -12,7 +12,7 @@ If a needed entry is missing, record a context defect. Do not treat an unmapped 
 | --- | --- | --- |
 | `Agents/design-decisions/` | Accepted high-level design | Analyst, Owner Advocate, Planner |
 | `Agents/planning/` | Operating model, architecture, implementation plan | Coordinator, Analyst, Planner, Owner Advocate |
-| `Agents/contracts/` | Authoritative agent role definitions | All first-wave roles; Agent Creator writes here |
+| `Agents/contracts/` | Authoritative agent role definitions | All first-wave roles; Agent Creator writes here; Independent Reviewer reads own contract and artifacts under review |
 | `Agents/contracts/_template.md` | Required headings for every contract | Agent Creator, reviewers |
 | `Agents/context-map.md` | This file | Planner, Coordinator |
 | `Agents/README` | Index of current workstream documents | Coordinator |
@@ -63,6 +63,29 @@ Each role may receive the rows marked yes. Anything else is a context defect if 
 
 Owner Advocate, when owner-invoked, may use whatever the owner attached. That exception does not allow other roles to widen their context.
 
+## Context allowed by Independent Reviewer
+
+Independent Reviewer is Slice 2 assurance. Rows below are the only allowed context. Missing mapped context is a context defect; do not mine the repository for extra authority. These rows must exist before any Independent Reviewer invocation (A8 before A6).
+
+| Entry | Independent Reviewer |
+| --- | --- |
+| Owner request or free-form owner context | no |
+| This context map | yes |
+| Design decision | no |
+| Operating model | no |
+| Integration architecture | Independent Reviewer section and disposition / severity bounds only as needed |
+| Implementation plan | no, unless the task contract explicitly includes the authorizing slice excerpt |
+| Own contract | yes |
+| Other contracts | only when those files are the artifacts under review |
+| Current specification | yes, the authorized specification under review |
+| Current implementation plan and task contracts | yes, plan and/or task contract in scope for this review |
+| Implementation diffs / authored artifacts under review | yes |
+| Tests or validation procedures | yes |
+| Validation evidence | yes |
+| Git history / pull-request context for the change under review | yes, when present and mapped; not an unbound full-history dump |
+| Full repository dump | no |
+| Unrelated chat or another role’s private reasoning | no |
+
 ## Default handoff packages
 
 | From → to | Include |
@@ -72,6 +95,8 @@ Owner Advocate, when owner-invoked, may use whatever the owner attached. That ex
 | Coordinator → Owner Advocate | one intent artifact, or the owner’s free-form package |
 | Coordinator → Planner | authorized specification; this map; architecture; implementation plan slice; contracts of roles that may be routed |
 | Planner → Agent Creator | one task contract; contract template; this map; specification excerpt that defines the agent; architecture section for that role |
+| Coordinator → Independent Reviewer | own contract; this map; authorized specification; in-scope plan/task contract; artifacts or diff under review; tests/validation procedures; validation evidence; Architecture Independent Reviewer / disposition bounds as mapped; Git/PR context for the change only when present and mapped |
+| Independent Reviewer → Coordinator | findings with evidence, severity, recommended dispositions, criteria checked vs not checked, residual risks; context defects |
 | Any role → Coordinator | the record that role must produce; defects; questions that passed the question policy |
 
 ## Out of scope for this map

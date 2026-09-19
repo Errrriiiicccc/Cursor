@@ -1,0 +1,24 @@
+# Efficiency
+
+Compact process history for this workstream. Coordinator owns this file.
+
+| When | Actor | Action | Why continue or stop |
+| --- | --- | --- | --- |
+| 2026-09-19 | Coordinator | Created work folder `2026-09-19-slice-2-independent-reviewer`; wrote `request.md`, `state.md`, `efficiency.md`. Set state `discovering`, disposition `launch_next_role`, next role `analyst`. | New Slice 2 request with clear goal already authorized by Implementation Plan 0003. No missing owner fact for intake. Continue to Analyst for `specification.md`. Did not invoke Owner Advocate (no intent artifact yet). Did not invoke Planner or Agent Creator. Did not write contracts or adapters. |
+| 2026-09-19 | Coordinator | Launched Analyst with default Coordinator→Analyst handoff package (exactly one role this invocation). | Single next role per contract; Analyst is the correct first worker for a new request. |
+| 2026-09-19 | Analyst | Wrote `specification.md`. No owner questions blocked. | Intent artifact now exists. |
+| 2026-09-19 | Coordinator | Updated state to `specified`; disposition `launch_next_role`; intended next role `owner-advocate`. Did **not** launch a second role in this invocation. | Gate: new specification requires Owner Advocate. Second launch deferred to parent/resume so this invocation does not hold two role launches. Export packaging not started. |
+| 2026-09-19 | Owner Advocate | Critiqued `specification.md`. Pause = yes (1 high, 7 ordinary). | High finding blocks treating bootstrap Accepted as proven C1–C3 assurance. |
+| 2026-09-19 | Coordinator | Copied OA output to `findings.md`. State → `blocked_for_owner`. Disposition → `owner_gate`. Launched no role. | High-severity OA finding requires owner confirmation before Analyst may amend intent. Planning not authorized. Ordinary findings recorded for after the high is resolved. |
+| 2026-09-19 | Owner | Answered gate: **Choice A** (Accepted for existence + explicit unproven C1–C3/real-diff residual until Slice 3 / later non-bootstrap). Include ordinary findings 2–6 in same Analyst revision; 7–8 no change. Framed gate as redundant because later review already expected. | Binding intent amendment; Choice A not reopened. |
+| 2026-09-19 | Coordinator | Cleared `blocked_for_owner`; annotated `findings.md`; state → Analyst revision. Process note: avoid asking owner to restate already-planned later-review residuals when the material amendment is already Choice A. Launching Analyst (exactly one role). | Continue to Analyst to encode Choice A + findings 2–6. Planning still blocked until re-OA on revised spec. |
+| 2026-09-19 | Analyst | Revised `specification.md`: Choice A residual; findings 2–6 addressed; no owner questions. | Material intent amendment complete. |
+| 2026-09-19 | Coordinator | State → `specified` (revised); disposition `launch_next_role`; next = `owner-advocate`. Did **not** launch OA this invocation. | Changed specification requires re-OA before Planner. One-launch rule already used on Analyst. |
+| 2026-09-19 | Owner Advocate | Pass 2 on revised `specification.md`. Pause = no (zero high). Ordinary: residual travels beyond Slice 3 label; thin charter OK; affirming. | Prior Choice A high fixed; do not reopen. |
+| 2026-09-19 | Coordinator | Appended Pass 2 to `findings.md`; marked revision cleared; specification **authorized for planning**. Launching Planner (exactly one role). | Continue to Planner. Agent Creator deferred until task contract exists. |
+| 2026-09-19 | Planner | Wrote `plan.md` with Steps 1–5 task contracts (AC authoring+A8; Coord A8 gate; Coord validation; IR bootstrap A6; Coord disposition). Choice A residual + A8-before-A6 encoded. | Authorizing task contract for Agent Creator now exists. |
+| 2026-09-19 | Coordinator | State → `planned`; next = `agent-creator` (Step 1). Did **not** launch Agent Creator this invocation. | One-launch rule used on Planner. Parent launches AC with Step 1 handoff. |
+| 2026-09-19 | Agent Creator | Step 1: wrote IR contract, readonly adapter, context-map A8, `implementation.md`. No self-review; no other role launched. | Authoring complete; A8 packaging present. |
+| 2026-09-19 | Coordinator | Step 2 A8 gate **PASSED** (IR context-map rows + handoffs exist before Step 4). Step 3 wrote `validation.md` (B2/B3 deferred to Step 4/5). Choice A residual not cleared. Launching Independent Reviewer Step 4 (exactly one role). | A8 satisfied; bootstrap A6 may proceed. |
+| 2026-09-19 | Independent Reviewer | Bootstrap A6: no blocking findings; B2 refusals recorded; Choice A / lineage residuals stated; no files written. | Role independence exercised; not tested real-diff assurance. |
+| 2026-09-19 | Coordinator | Step 5: persisted IR findings in `findings.md`; closed B2/B3 in `validation.md`; state → `complete_pending_merge`. Did not launch a second role; did not clear Choice A; did not start export. | Slice 2 pipeline success (existence + records). Stop for owner merge. |
