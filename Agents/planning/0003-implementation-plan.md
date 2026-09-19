@@ -61,9 +61,10 @@ Do not write Independent Reviewer, Python, or a general implementation worker in
 
 ### Slice 2 — First end-to-end run
 
-Use the five agents to create the **next** agent through the process. Which agent that is will be decided at the start of this slice.
+Use the five agents to create **Independent Reviewer** through the process. That choice is now made: otherwise Agent Creator would have to review its own work.
 
-If that next agent would otherwise review itself, hand-author Independent Reviewer first as a thin extra, then continue.
+Start instructions: [how-to-start-a-workstream.md](how-to-start-a-workstream.md).  
+Prompt to paste: [0003-slice-2-start-prompt.md](0003-slice-2-start-prompt.md).
 
 Success for this slice: the process produced a new agent contract and adapter, with validation and review records, without a single invocation holding multiple roles.
 
@@ -77,9 +78,9 @@ Targeted “scrutinize Coordinator” requests come after this, and only if this
 
 Slice 1 is done. The next working session is Slice 2:
 
-1. Read [0003-slice-1-decisions.md](0003-slice-1-decisions.md).
-2. Choose the next agent to create through the process.
-3. Start that workstream by invoking Coordinator.
+1. Open this repo in the Cursor app (or a Cloud Agent) on a revision that contains `.cursor/agents/`.
+2. Start an Agent chat with `/coordinator`.
+3. Paste [0003-slice-2-start-prompt.md](0003-slice-2-start-prompt.md).
 
 ## Validation for this plan
 

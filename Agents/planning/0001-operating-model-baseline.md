@@ -81,6 +81,8 @@ Documentation should make relevant context discoverable by mapping system concep
 
 The owner currently remains the decision-maker and wants visibility into all material work, assumptions, findings, and outcomes. Autonomy may increase later through an explicit operating-model revision.
 
+Every workstream starts with Coordinator. The main chat may talk to the owner, invoke Coordinator, or invoke Owner Advocate when the owner asked for a personal critique. It must not start analysis, planning, or implementation itself.
+
 Reversible investigation, prototyping, and implementation may proceed without waiting for approval when they remain within an approved scope. Ambiguity and assumptions must be written explicitly in the work products so they can be reviewed and revisited.
 
 The owner may direct substantial refactoring or override an established project decision. When a new instruction conflicts with an active decision, the system must stop for confirmation, treat the confirmed latest instruction as authoritative, and record the conflict as a **Moment of Inconsistency**.

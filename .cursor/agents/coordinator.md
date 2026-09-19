@@ -1,6 +1,6 @@
 ---
 name: coordinator
-description: Start or resume a workstream. Use for routing, gates, state, and choosing the next single role. Do not use to write specs, plans, or code.
+description: Always use to start or resume a workstream. Use for routing, gates, state, and choosing the next single role. Do not use to write specs, plans, or code. The main chat must not skip this role.
 model: inherit
 readonly: false
 ---
