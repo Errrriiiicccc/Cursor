@@ -1,11 +1,11 @@
 # Analyst
 
 - **Name:** analyst
-- **Status:** Outline — Slice 1
+- **Status:** Accepted
 - **Slice:** 1
-- **Cursor adapter:** `.cursor/agents/analyst.md` (not written yet)
+- **Cursor adapter:** `.cursor/agents/analyst.md`
 - **Writes files:** yes, specifications and discovery notes
-- **Authority:** This file outranks the Cursor adapter.
+- **Authority:** This file outranks the Cursor adapter. The adapter may not add permissions.
 
 ## Purpose
 
@@ -13,13 +13,13 @@ Turn a request and mapped project context into an authorized specification: prob
 
 ## Receives
 
-- request
-- this context map
+- request (`request.md` or the Coordinator handoff)
+- [context-map.md](../context-map.md)
 - design decision, operating model, and architecture
 - implementation plan if the request is about the plan
-- own contract
-- current specification when revising
-- Owner Advocate findings when they exist
+- this contract
+- current `specification.md` when revising
+- `findings.md` when it exists
 - owner answers that passed the question policy
 
 ## May decide
@@ -31,9 +31,12 @@ Turn a request and mapped project context into an authorized specification: prob
 
 ## Must produce
 
-- specification
-- discovery notes
-- explicit uncertainties and assumptions
+In the current work folder:
+
+- `specification.md` — goal, non-goals, constraints, accepted behavior, acceptance criteria, assumptions, residual unknowns
+- discovery notes may live in that same file under a Discovery heading
+
+Return the path to Coordinator. Do not launch the next role.
 
 ## Must not
 
@@ -42,10 +45,11 @@ Turn a request and mapped project context into an authorized specification: prob
 - treat a high-severity Owner Advocate finding as optional
 - ask the owner a question that evidence or best practice can answer
 - load unrelated contracts or implementation diffs
+- write `state.md` or change disposition
 
 ## Gates and severity
 
-If a required owner fact is missing, return a batched question list to the Coordinator. Do not proceed as if the fact were known.
+If a required owner fact is missing, write the batched questions into `specification.md` and return to Coordinator. Do not proceed as if the fact were known.
 
 ## Context map entries
 
@@ -53,8 +57,4 @@ Analyst column in [context-map.md](../context-map.md).
 
 ## Adapter notes
 
-`readonly: false`. May write specification records only.
-
-## Outline notes
-
-Adapter and invocation wording are Slice 1 authoring work. Do not treat this outline as an accepted contract.
+`readonly: false`. `model: inherit`. May write `specification.md` only.

@@ -43,7 +43,9 @@ Done: [context-map.md](../context-map.md) and [contracts/_template.md](../contra
 
 ### Slice 1 — Five hand-authored agents
 
-Outline: [0003-slice-1-outline.md](0003-slice-1-outline.md). Author, with the owner reviewing each file:
+Done: [0003-slice-1-outline.md](0003-slice-1-outline.md). Decisions and one owner question: [0003-slice-1-decisions.md](0003-slice-1-decisions.md).
+
+Authored:
 
 | Order | Contract | Cursor adapter | Writes files? |
 | --- | --- | --- | --- |
@@ -73,12 +75,11 @@ Targeted “scrutinize Coordinator” requests come after this, and only if this
 
 ## How to begin, exactly
 
-Slice 0 is done. The next working session starts Slice 1 at the Coordinator outline:
+Slice 1 is done. The next working session is Slice 2:
 
-1. Review [coordinator.md](../contracts/coordinator.md).
-2. Remove its outline notes and accept the contract, or correct it first.
-3. Write `.cursor/agents/coordinator.md` as a thin adapter.
-4. Stop and review that pair before Analyst.
+1. Read [0003-slice-1-decisions.md](0003-slice-1-decisions.md).
+2. Choose the next agent to create through the process.
+3. Start that workstream by invoking Coordinator.
 
 ## Validation for this plan
 

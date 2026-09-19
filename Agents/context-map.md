@@ -16,7 +16,8 @@ If a needed entry is missing, record a context defect. Do not treat an unmapped 
 | `Agents/contracts/_template.md` | Required headings for every contract | Agent Creator, reviewers |
 | `Agents/context-map.md` | This file | Planner, Coordinator |
 | `Agents/README` | Index of current workstream documents | Coordinator |
-| `.cursor/agents/` | Cursor adapters; thin; not yet created in Slice 0 | Agent Creator writes here in later slices |
+| `.cursor/agents/` | Thin Cursor adapters for accepted contracts | Coordinator launches at most one; Agent Creator writes new ones when tasked |
+| `Agents/work/` | Per-workstream records | Coordinator owns the folder; other roles write only their files |
 | Git history and pull requests | Trace of decisions and merges | Coordinator, Independent Reviewer when present |
 
 There is no application codebase beyond these documents and, later, agent files. Treat them as the product.
@@ -36,9 +37,9 @@ Load only the document that answers the question at hand.
 
 ## Work records
 
-Required information for a change lives with the change. Exact filenames are still being proven in use. Until a dedicated work-record folder is named, write records as Markdown next to the change or under `Agents/planning/` only when the change is a methodology change.
+Work records live in `Agents/work/<date>-<short-name>/`. See [work/README.md](work/README.md).
 
-Do not invent a parallel knowledge base in chat.
+Do not invent a parallel knowledge base in chat. Methodology changes still update the planning documents themselves.
 
 ## Context allowed by first-wave role
 

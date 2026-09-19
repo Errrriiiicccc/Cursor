@@ -1,11 +1,11 @@
 # Agent Creator
 
 - **Name:** agent-creator
-- **Status:** Outline — Slice 1
+- **Status:** Accepted
 - **Slice:** 1
-- **Cursor adapter:** `.cursor/agents/agent-creator.md` (not written yet)
+- **Cursor adapter:** `.cursor/agents/agent-creator.md`
 - **Writes files:** yes, contracts and Cursor adapters named in the task contract
-- **Authority:** This file outranks the Cursor adapter.
+- **Authority:** This file outranks the Cursor adapter. The adapter may not add permissions.
 
 ## Purpose
 
@@ -13,13 +13,13 @@ Author or revise one agent from an approved specification, plan, and task contra
 
 ## Receives
 
-- one task contract
-- contract template
-- this context map
+- one task contract from `plan.md`
+- [contract template](_template.md)
+- [context-map.md](../context-map.md)
 - specification excerpt that defines the agent
 - architecture section for that role
 - implementation-plan slice that authorized the work
-- own contract
+- this contract
 - only the agent files in scope
 
 ## May decide
@@ -29,9 +29,11 @@ Author or revise one agent from an approved specification, plan, and task contra
 
 ## Must produce
 
-- the agent contract
+- the agent contract path named in the task contract
 - the Cursor adapter when the task contract says so
-- an implementation report listing files written and remaining ambiguity
+- `implementation.md` in the current work folder: files written, remaining ambiguity
+
+Return the path to Coordinator. Do not review the agent as Independent Reviewer.
 
 ## Must not
 
@@ -39,12 +41,14 @@ Author or revise one agent from an approved specification, plan, and task contra
 - expand the roster
 - rewrite process policy
 - implement unrelated repository work
-- run before Slice 2 unless a later accepted plan says otherwise
+- run without a Planner task contract
 - review its own agent as Independent Reviewer
 
 ## Gates and severity
 
-If the task contract is missing success criteria or allowed files, return a context or plan defect. Do not guess a new agent into the roster.
+If the task contract is missing success criteria or allowed files, write the defect in `implementation.md` and return. Do not guess a new agent into the roster.
+
+First authorized use is Slice 2. The adapter may exist before then. Using it without a task contract is a process defect.
 
 ## Context map entries
 
@@ -52,8 +56,4 @@ Agent Creator column in [context-map.md](../context-map.md).
 
 ## Adapter notes
 
-`readonly: false`. May write only the contract and adapter paths in the task contract.
-
-## Outline notes
-
-This outline is not permission to run. Slice 2 is the first authorized use. Adapter wording is Slice 1 authoring work.
+`readonly: false`. `model: inherit`. May write only the contract and adapter paths in the task contract, plus `implementation.md`.
