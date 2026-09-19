@@ -84,9 +84,9 @@ Slice 1 is done. The next working session is Slice 2:
 ## Validation for this plan
 
 - Slice 0 files exist and can be used to choose context without opening the whole repository.
-- Each first-wave adapter invokes only its contract.
-- Owner Advocate cannot write repository files.
-- Agent Creator will not run until Slice 2.
+- Each first-wave adapter exists and points at only its contract.
+- Owner Advocate is `readonly: true`.
+- Agent Creator must not run until Slice 2.
 - No export kit is started.
 
 ## Outstanding questions
