@@ -180,7 +180,7 @@ The future integration plan must define mechanisms that:
 3. Keep resolved policy separate from proposals, deferred matters, and open questions.
 4. Make assumptions explicit and reviewable.
 5. Map persistent project knowledge to relevant repository areas.
-6. Support reusable technology or discipline specialists behind bounded contracts.
+6. Support reusable technology or discipline specialists behind bounded contracts. The integration architecture and implementation plan must name the agent products that realize those specialists; the design decision layer does not.
 7. Validate integration across specialist boundaries.
 8. Allow coordination to resolve cross-specialist differences when the existing feature contract determines the answer, and escalate when resolution would change that contract or a higher authority.
 9. Batch questions only after available investigation is complete.

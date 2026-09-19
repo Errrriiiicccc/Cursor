@@ -26,7 +26,7 @@ We will design the workstream as a **specification-driven, evidence-based engine
 
 The process will maintain durable work records outside conversational context, use explicit stage transitions, and require traceable validation and review before work is considered complete.
 
-This decision defines capabilities and responsibilities, not a fixed number of agents, models, prompts, tools, or workflow steps. A single agent may perform multiple responsibilities in separate, role-specific invocations, while multiple agents may divide them. The future integration design will determine that arrangement.
+This decision defines capabilities and responsibilities. It does not fix a number of agents at the design-decision layer, because that would have been too early. Later integration and implementation documents must name the agent products to create. A single agent may still perform multiple responsibilities in separate, role-specific invocations, and an agent product may later be split or merged if measurement requires it.
 
 ## Design principles
 
@@ -142,7 +142,7 @@ Any future integration based on this decision must provide:
 
 This decision does not:
 
-- prescribe the number of agents or model invocations;
+- prescribe, at this layer, the number of agents or model invocations; that set belongs to the integration architecture and implementation plan;
 - select particular models, vendors, tools, prompts, or orchestration technology;
 - define exact file formats, schemas, directories, or user interfaces;
 - require every repository or change to use identical validation;
@@ -187,6 +187,6 @@ Future integration decisions may refine terminology, combine responsibilities, a
 
 The [Agent-Assisted Development Operating Model Baseline](../planning/0001-operating-model-baseline.md) records the authoritative business and operating context that constrains integration planning.
 
-The [Integration Architecture](../planning/0002-integration-architecture.md) is the next design checkpoint. It will define documents, responsibilities, handoffs, and gates without selecting models, tools, agent counts, or implementation schemas.
+The [Integration Architecture](../planning/0002-integration-architecture.md) is the next design checkpoint. It defines documents, responsibilities, handoffs, gates, and the agent products to develop. Models, prompts, file schemas, and runtime wiring remain implementation-plan concerns.
 
 A later implementation plan will translate the accepted architecture into repository structures, workflow mechanics, agent interactions, schemas, validation commands, and adoption stages. During that work, minor refinements to this design are acceptable when recorded explicitly, but the design invariants above remain the checkpoint against which those refinements will be evaluated.

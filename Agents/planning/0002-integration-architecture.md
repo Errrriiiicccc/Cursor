@@ -15,6 +15,8 @@ Resolved architecture statements are binding until formally superseded. Text mar
 
 The primary near-term product of this architecture is a set of **specialized agents**. Those agents are the current packaging of durable responsibilities. Responsibilities remain the source of truth if an agent is later split, merged, or replaced.
 
+The design decision omitted an agent roster on purpose: naming agents that early would have frozen packaging before the workstream shape existed. This document is past that point. It must name the agents to create. The implementation plan will take that roster as the build list and may refine packaging only through an explicit document change.
+
 ## 1. Purpose and standing
 
 This document translates the design decision and operating model into an operable system. It exists so later agent work has a stable map:
@@ -375,7 +377,9 @@ These measurements exist to tune the checkpoint guide and the agent roster. They
 
 ## 13. Agent products to develop and test
 
-This is the current packaging of the contracts above. It is a build sequence, not a claim that every product must remain a separate forever-runtime.
+This roster is now required. Later implementation work creates these agents; it does not reopen whether a set should exist.
+
+This is the current packaging of the contracts above. It is a build sequence. An agent product may later be split or merged if measurement requires it, but that is a controlled change, not an informal rewrite.
 
 ### First wave — control plane
 
