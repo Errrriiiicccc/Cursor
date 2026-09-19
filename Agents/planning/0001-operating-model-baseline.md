@@ -30,7 +30,7 @@ When sources conflict, work stops at the affected boundary and uses this order o
 
 Lower sources may refine higher sources but may not contradict them. A new owner instruction does not become executable merely because it is recent: the conflict must be confirmed, recorded as a Moment of Inconsistency, and propagated into affected authoritative documents before downstream work resumes.
 
-Within this operating model, an **authorized specification** is one that has passed every approval gate applicable under the active policy. It does not imply that the owner personally approves every specification. The outstanding approval questions below determine when owner approval is one of those gates.
+Within this operating model, an **authorized specification** is one that has passed every approval gate applicable under the active policy. It does not imply that the owner personally approves every specification. The approval and delivery rules in Resolved Decision 13 define those gates.
 
 ## Resolved decisions
 
@@ -81,7 +81,7 @@ Documentation should make relevant context discoverable by mapping system concep
 
 The owner currently remains the decision-maker and wants visibility into all material work, assumptions, findings, and outcomes. Autonomy may increase later through an explicit operating-model revision.
 
-Reversible investigation and implementation may proceed without waiting for approval when they remain within an approved scope. Assumptions must be written explicitly so they can be reviewed and revisited.
+Reversible investigation, prototyping, and implementation may proceed without waiting for approval when they remain within an approved scope. Ambiguity and assumptions must be written explicitly in the work products so they can be reviewed and revisited.
 
 The owner may direct substantial refactoring or override an established project decision. When a new instruction conflicts with an active decision, the system must stop for confirmation, treat the confirmed latest instruction as authoritative, and record the conflict as a **Moment of Inconsistency**.
 
@@ -154,6 +154,23 @@ At minimum, completed work should preserve:
 
 User-facing completion reports should support experienced developers and include the outcome, important decisions, validation evidence, remaining risks, and implementation explanation without requiring preservation of every prompt.
 
+### 13. Approval and delivery gates
+
+A reversible prototype should be produced in almost all cases, including work that later requires approval or escalation. Ambiguity must be called out explicitly in the prototype so later review can iterate against a concrete artifact rather than an abstract description.
+
+Work must still stop before implementation when a change is not reasonably reversible, or when continuing would consume material cost or commit an irreversible external effect. The integration architecture will enumerate those stop-before-implementation cases as part of the approval checkpoint guide.
+
+The workstream will maintain a specific approval checkpoint guide rather than asking the owner to invent checkpoints per task. That guide starts from the mandatory categories already required by the design decision. After observed use, checkpoints are added or removed according to two measurements:
+
+- too many approval requests; or
+- too few approval requests.
+
+Until that guide exists, workers follow this baseline and the design decision; they do not invent additional owner-approval gates.
+
+When a workstream has met its acceptance criteria and applicable controls, owner approval is not required to treat the work as complete. The remaining owner review point is the merge to `main`. At that point the owner may review the change personally or request agent-assisted analysis. Visibility artifacts must still be produced so that review is possible.
+
+Work delivered with deferred validation remains an exception to ordinary completion: the owner must explicitly accept that disposition before it is treated as delivered.
+
 ## Planning requirements
 
 The future integration plan must define mechanisms that:
@@ -172,6 +189,9 @@ The future integration plan must define mechanisms that:
 12. Diagnose repeated failures before retrying.
 13. Capture lightweight efficiency evidence without preserving complete chat transcripts.
 14. Permit deliberate methodology changes while preventing workers from self-authorizing them.
+15. Produce reversible prototypes that record remaining ambiguity explicitly.
+16. Maintain a specific approval checkpoint guide and adjust it from observed approval volume.
+17. Treat merge to `main` as the ordinary owner review point for otherwise-complete work.
 
 ## Process measurements
 
@@ -213,21 +233,6 @@ Until resolved, implementation workers receive no discretion to establish these 
 
 ## Outstanding questions
 
-These are the remaining owner-level questions for integration planning:
+No owner-level questions remain for this baseline.
 
-1. **Mandatory approval timing:** The design decision already requires approval or escalation for ambiguous product behavior, architectural changes, security-sensitive behavior, authentication or authorization, destructive data changes, public interface changes, and material compatibility tradeoffs. For which of these may a reversible prototype be produced before owner approval, and which must stop before any implementation?
-
-Ans: A reversible prototype should in almost all cases be created, with the ambiguitiy called out explicitly within the prototype. This allows for easier iteration.
-
-2. **Additional specification checkpoints:** Beyond the mandatory categories above, what characteristics should trigger explicit owner approval of a specification before implementation begins? This is the unresolved middle ground between approving every task and allowing every ordinary task to proceed under the active policy.
-
-Ans: I genuinely just do not know. We should attempt to make a very specific approval checkpoint guide, and from that, for each of the checkpoints we can adjust based on:
-
-- if there are too many approvals being asked for
-- if there are not enough approvals being asked for
-
-3. **Ordinary completion authority:** During the initial personal-use phase, does the owner need to approve every otherwise-complete workstream, or is review visibility sufficient when all acceptance criteria and controls have been satisfied?
-
-Ans: If all acceptance criteria have been met, and controls have been satisfied, then the only review necessary is before the merge with main. At this point, the dev may take it upon themselves to manually review, or even get an agent to perform analysis with them.
-
-These questions should be answered in this document during the next collaborative revision. New questions should be added only when they require owner context under the question policy above.
+The concrete contents of the approval checkpoint guide are an integration-architecture concern. They will be proposed from the design decision, this operating model, and observed process measurements, not left as an open questionnaire.

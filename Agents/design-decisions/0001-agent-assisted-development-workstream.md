@@ -187,4 +187,6 @@ Future integration decisions may refine terminology, combine responsibilities, a
 
 The [Agent-Assisted Development Operating Model Baseline](../planning/0001-operating-model-baseline.md) records the authoritative business and operating context that constrains integration planning.
 
-A separate integration plan will translate this decision and that baseline into repository structures, workflow mechanics, agent interactions, schemas, validation commands, and adoption stages. During that work, minor refinements to this design are acceptable when recorded explicitly, but the design invariants above remain the checkpoint against which those refinements will be evaluated.
+The [Integration Architecture](../planning/0002-integration-architecture.md) is the next design checkpoint. It will define documents, responsibilities, handoffs, and gates without selecting models, tools, agent counts, or implementation schemas.
+
+A later implementation plan will translate the accepted architecture into repository structures, workflow mechanics, agent interactions, schemas, validation commands, and adoption stages. During that work, minor refinements to this design are acceptable when recorded explicitly, but the design invariants above remain the checkpoint against which those refinements will be evaluated.
