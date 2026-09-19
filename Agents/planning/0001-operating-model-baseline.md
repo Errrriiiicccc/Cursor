@@ -7,7 +7,7 @@
 
 ## How to use this document
 
-This document is the collaborative checkpoint between the high-level design decision and the future integration plan. It separates:
+This document is the collaborative checkpoint between the high-level design decision and the integration architecture. It separates:
 
 - **Resolved decisions**, which are authoritative until formally superseded;
 - **Planning requirements**, which the integration must satisfy;
