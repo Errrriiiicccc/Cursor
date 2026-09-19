@@ -60,7 +60,7 @@ Assurance plane
 Owner merge review  →  main
 ```
 
-- The **control plane** understands the request, produces the specification and implementation plan, and packages each handoff.
+- The **control plane** understands the request, produces the specification and implementation plan, and packages each handoff. A workstream always starts at Coordinator.
 - The **Owner Advocate** attacks whether the goal and plan are the right ones. It does not run the factory and does not write the specification.
 - The **execution plane** performs bounded implementation, starting with Agent Creator in this repository.
 - The **assurance plane** checks evidence and reconciles documentation.
