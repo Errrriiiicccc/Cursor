@@ -1,2 +1,15 @@
 This is where I will keep Cursor based files. I plan to keep cursor specific productions here, such as Agents,
 or knowledge repositories regarding how I can utilize Cursor.
+
+Current workstream documents:
+
+- [Agent-Assisted Development Design Decision](design-decisions/0001-agent-assisted-development-workstream.md)
+- [Agent-Assisted Development Operating Model Baseline](planning/0001-operating-model-baseline.md)
+- [Integration Architecture 0002](planning/0002-integration-architecture.md)
+- [Implementation Plan 0003](planning/0003-implementation-plan.md)
+- [Context Map](context-map.md)
+- [Slice 1 Agents](planning/0003-slice-1-outline.md)
+- [Slice 1 Decisions](planning/0003-slice-1-decisions.md)
+- [How to start a workstream](planning/how-to-start-a-workstream.md)
+- [Slice 2 start prompt](planning/0003-slice-2-start-prompt.md)
+- [Work records](work/README.md)
