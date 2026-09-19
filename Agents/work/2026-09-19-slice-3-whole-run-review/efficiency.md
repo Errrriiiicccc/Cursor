@@ -1,0 +1,41 @@
+# Efficiency
+
+| When | Who | What | Why stop or continue |
+| --- | --- | --- | --- |
+| 2026-09-19 | Coordinator | Opened `Agents/work/2026-09-19-slice-3-whole-run-review/`; wrote `request.md`, `state.md`, this file. Bound Slice 2 residuals as open. No owner questions (intent + constraints complete). Launching Analyst (exactly one role). | Continue — new workstream needs an authorized specification before OA/Planner/review execution. |
+| 2026-09-19 | Analyst | Wrote draft `specification.md` for Slice 3 whole-run review. No owner questions. | Material intent artifact ready for OA gate. |
+| 2026-09-19 | Coordinator | State → `owner_advocate_pending`. Launching Owner Advocate on the new specification only (exactly one role). Planning blocked until OA return. | Gate: OA on new/changed specification. |
+| 2026-09-19 | Owner Advocate | Pass 1: pause = yes (1 high). Ordinary findings 1–7. Affirming residual honesty / non-goals. | Spec not authorized. |
+| 2026-09-19 | Coordinator | Copied OA list into `findings.md`. State → `blocked_for_owner`. Did not launch Analyst/Planner. One owner batch question on High #1 disposition. | Stop — high OA finding gate. |
+| 2026-09-19 | Owner | Disposition **1 — Fix**; reject process-hygiene-only; ordinary 1–7 all in same revision (none deferred). Preference note: future gate questions should be self-contained for an experienced SE (failure / choices / default / next) without requiring findings-file deep dive — formalize later via explicit doc update only. | Binding intent amendment. |
+| 2026-09-19 | Coordinator | Annotated `findings.md`; state → `specification_revision_pending`. Recorded gate-phrasing preference (no silent process rewrite). Launching Analyst revision (exactly one role). | Continue — encode Fix + ordinary 1–7; re-OA after. |
+| 2026-09-19 | Analyst | Revised `specification.md`: S3-A10 coverage ledger (lenses + goal-baseline); ordinary 1–7 addressed; R1–R3 honesty preserved. No owner questions. | Material intent amendment complete. |
+| 2026-09-19 | Coordinator | State → `owner_advocate_pending`. Launching Owner Advocate Pass 2 on revised specification only (exactly one role). | Gate: re-OA after changed specification. |
+| 2026-09-19 | Owner Advocate | Pass 2: pause = no (zero high). Ordinary 1–3 record-and-continue (name lens producers; Constraint 13 for L-GB; ledger verify). Pass 1 High #1 + ordinary 1–7 closed. | Spec authorized for planning. |
+| 2026-09-19 | Coordinator | Copied Pass 2 into `findings.md`. State → `planning_pending`. Launching Planner (exactly one role). | Continue — workstream-level plan; OA on plan next. |
+| 2026-09-19 | Planner | Wrote `plan.md` Steps 1–5 (OA plan gate; IR L-W–L-WC; Coord persist; OA L-GB/L-RH/L-ATB; Coord closeout). R1–R3 default open; no export/new agents/clearance package. | Workstream-level plan ready for OA. |
+| 2026-09-19 | Coordinator | State → `owner_advocate_pending_plan`. Launching Owner Advocate on `plan.md` only (exactly one role). | Gate: OA on workstream-level plan. |
+| 2026-09-19 | Owner Advocate | Plan critique: pause = yes (1 high — Step 4 OA-as-producer charter leak). Ordinary 1–4. | Plan not authorized for execution. |
+| 2026-09-19 | Coordinator | Copied plan OA into `findings.md`. State → `blocked_for_owner`. Self-contained gate question for owner. Did not launch Planner/IR. | Stop — high OA on plan. |
+| 2026-09-19 | Owner | Plan High #1 disposition **1 — Fix**; reject OA-as-producer override; ordinary 1–4 all in same Planner revision (none deferred). | Binding plan amendment. |
+| 2026-09-19 | Coordinator | Annotated `findings.md`; state → `plan_revision_pending`. Launching Planner revision (exactly one role). | Continue — Analyst produces L-GB/L-RH/L-ATB; re-OA after. |
+| 2026-09-19 | Planner | Revised `plan.md`: Analyst Step 3 for L-GB/L-RH/L-ATB; Coord preflight Step 2; OA only Step 1 plan gate; ordinary 1–4 addressed. | Material plan amendment complete. |
+| 2026-09-19 | Coordinator | State → `owner_advocate_pending_plan`. Launching Owner Advocate Pass 2 on revised `plan.md` only (exactly one role). | Gate: re-OA after changed workstream-level plan. |
+| 2026-09-19 | Owner Advocate | Plan Pass 2: pause = yes (1 high — Step 3 Analyst handoff vs context-map limits). Ordinary 1–2. Prior OA-as-producer Fix routing OK but not executable yet. | Plan still not authorized. |
+| 2026-09-19 | Coordinator | Copied Pass 2 into `findings.md`. State → `blocked_for_owner`. Self-contained gate (map-legal packaging vs map amendment). Did not launch Planner/IR. | Stop — high OA on revised plan. |
+| 2026-09-19 | Owner | Pass 2 High disposition **1 — Map-legal packaging**; no map/Analyst-contract amendment now. Ordinary 1–2 in same revision. Rationale: prefer composed multi-role coverage under existing map; amend map later only if a real run proves a lens cannot be done honestly with legal packaging. | Binding plan packaging amendment. |
+| 2026-09-19 | Coordinator | Annotated `findings.md`; state → `plan_revision_pending`. Launching Planner revision (exactly one role). | Continue — map-legal Analyst/IR split; re-OA after. |
+| 2026-09-19 | Planner | Revised `plan.md`: Analyst L-GB+L-RH map-allowed only; IR L-W–L-WC+L-ATB with implementation/IR-contract; ordinary 1–2 folded; no map amend. | Material packaging amendment complete. |
+| 2026-09-19 | Coordinator | State → `owner_advocate_pending_plan`. Launching Owner Advocate Pass 3 on revised `plan.md` only (exactly one role). | Gate: re-OA after map-legal plan revision. |
+| 2026-09-19 | Owner Advocate | Plan Pass 3: pause = yes (1 high — IR Step 5 Architecture §13 beyond map). Ordinary 1–2 (thin L-ATB/L-GB expected under map-legal). Analyst packaging OK. | Plan still not authorized. |
+| 2026-09-19 | Coordinator | Copied Pass 3 into `findings.md`. State → `blocked_for_owner`. Self-contained gate (strip §13 vs map amend). Did not launch Planner/IR. | Stop — high OA on map-legal plan. |
+| 2026-09-19 | Owner | Pass 3 High disposition **1 — Strip §13 from IR package**; no map amendment for IR §13. Ordinary 1–2 in same revision. Rationale: continue composed map-legal packaging; do not widen IR for §13 convenience. | Binding IR package amendment. |
+| 2026-09-19 | Coordinator | Annotated `findings.md`; state → `plan_revision_pending`. Launching Planner revision (exactly one role). | Continue — strip §13; bind L-ATB to task contract + IR evidence; re-OA after. |
+| 2026-09-19 | Planner | Revised `plan.md` Step 5: strip Architecture §13; L-ATB = task-contract four conditions + Slice 2 IR-facing evidence; ordinary 1–2 documented; no map amend. | Material IR package amendment complete. |
+| 2026-09-19 | Coordinator | State → `owner_advocate_pending_plan`. Launching Owner Advocate Pass 4 on revised `plan.md` only (exactly one role). | Gate: re-OA after strip-§13 revision. |
+| 2026-09-19 | Owner Advocate | Plan Pass 4: pause = no (zero high). Ordinary 1 — prefer excerpt-only Architecture at IR handoff. Strip-§13 + ordinary 1–2 adequate. | Plan authorized for execution. |
+| 2026-09-19 | Coordinator | Copied Pass 4 into `findings.md`. Step 2 preflight **PASSED** (full inventory). State → `review_execution_step_3`. Launching Analyst Step 3 map-legal package only (exactly one role). | Continue — L-GB + L-RH production. |
+| 2026-09-19 | Analyst | Step 3: L-GB `pass`; L-RH `pass`; intentional map-legal depth limit recorded; R1–R3 not cleared; L-ATB/L-W–L-WC not claimed. No files written. | Producing review complete. |
+| 2026-09-19 | Coordinator | Step 4: persisted Step 3 into `findings.md`; coverage ledger L-GB/L-RH checked. State → `review_execution_step_5`. Launching Independent Reviewer Step 5 (exactly one role); Architecture excerpt-only (no §13); no Analyst findings attached. | Continue — L-W–L-WC + L-ATB. |
+| 2026-09-19 | Independent Reviewer | Step 5: L-W/L-MC/L-RL/L-WC `pass`; L-ATB `pass` (IR) / thin-not-evaluable (control-plane); no blocking findings; R1–R3 remain open. No files written. | Producing review complete. |
+| 2026-09-19 | Coordinator | Step 6: persisted Step 5; completed coverage ledger; L-RH this-run re-confirm; residual ledger R1–R3 **still open**; mechanical check PASS; S3-A1–A10 met. State → `complete_pending_merge`. Did not clear residuals; no procedure doc updates; no second role. | Stop — owner merge review. |
