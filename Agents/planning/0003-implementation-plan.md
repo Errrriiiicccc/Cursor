@@ -39,13 +39,11 @@ Body: the role instructions, including which contract to follow.
 
 ### Slice 0 — Context map
 
-Add `Agents/context-map.md` describing this repository: the three planning documents, where contracts will live, where Cursor adapters will live, and what context each first-wave role may receive.
+Done: [context-map.md](../context-map.md) and [contracts/_template.md](../contracts/_template.md).
 
-No agents yet. This is the map the Planner will use.
+### Slice 1 — Five hand-authored agents
 
-### Slice 1 — Contract template, then five hand-authored agents
-
-Add one contract template. Then author, with the owner reviewing each file:
+Outline: [0003-slice-1-outline.md](0003-slice-1-outline.md). Author, with the owner reviewing each file:
 
 | Order | Contract | Cursor adapter | Writes files? |
 | --- | --- | --- | --- |
@@ -75,14 +73,12 @@ Targeted “scrutinize Coordinator” requests come after this, and only if this
 
 ## How to begin, exactly
 
-The next working session should do **Slice 0 and the contract template only**. That is the start of integration.
+Slice 0 is done. The next working session starts Slice 1 at the Coordinator outline:
 
-1. Create `Agents/contracts/` and `Agents/context-map.md`.
-2. Write the context map for the documents that already exist.
-3. Write `Agents/contracts/_template.md` with the required headings.
-4. Stop. Review those two files before any agent body is written.
-
-The session after that authors Coordinator, then Analyst, then Planner, then Owner Advocate, then Agent Creator, one contract plus adapter at a time.
+1. Review [coordinator.md](../contracts/coordinator.md).
+2. Remove its outline notes and accept the contract, or correct it first.
+3. Write `.cursor/agents/coordinator.md` as a thin adapter.
+4. Stop and review that pair before Analyst.
 
 ## Validation for this plan
 
