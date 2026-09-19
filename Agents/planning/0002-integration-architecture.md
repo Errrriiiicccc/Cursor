@@ -70,3 +70,15 @@ Owner-level questions, if any remain after the architecture body is written. Tec
 ## Outstanding questions
 
 1. Does this section list match the architecture you want written next, or should any section be added, removed, split, or renamed before the body is drafted?
+
+Ans: I do really like this outline, but I am a bit afraid that we're close to a "General Agent" plan. What I want from the start of this is to create multiple small, specialized, agents that work in tandem. For example, right now we are close to what I'd call the highest-level of agents. Review, analysis, and high-level scoping of decisions. This sort of agent is in-charge of the creation of any implementation plan, which breaks down clear checkpoints in the implementation. Sets success criteria. Decides which agents should be activated when.
+
+Another agent might come in (if reasonable to break this out into another agent) to break down the implementation plan via a process of determining at each step in the plan, what is the agent(s) that should be used in this step. What are the contexts that each agent should be provided. What are the success criteria(s) of each of those agents.
+
+And then, the more specific agents get called to action. For example, lets say the specific action is to create a new procedure. One agent may be in-charge of the actual development of the feature, one agent is in-charge of the creation of validation / test-cases, another agent comes in and reviews the procedure, test-cases, and decides if it truly met the requirements laid out in the implementation plan.
+
+I am laying them out as if they NEED to be separate agents, but that is just my consideration. Please review my proposed ideas with scrutiny, and utilize your own discretion as if you were a high-level AI developer. Since I am a novice, I want to have my ideas challenged. Please in your response, provide a (to be reviewed) list of agents that need to be developed and tested.
+
+To make sure it is clear, my PRIMARY CURRENT GOAL of this design is to create agents. I do not know very well how to do this, so I am trusting that all of the design, integration plan, planning, etc. are working towards this goal, and also achieving things that are necessary to this goal that I didn't understand or realize from the get-go. 
+
+With that in mind, I think that another agent should be an extremely high-level "Reviewer for learning and proper decision making" agent. This agent should effectively act as the "Ideal Eric" (that's my name). This Ideal Eric would be effectively me if I knew more about everything I was talking about. It should attempt to understand what my goals are, but heavily scrutinize my decisions and choices to achieve those goals. 
