@@ -235,4 +235,6 @@ Until resolved, implementation workers receive no discretion to establish these 
 
 No owner-level questions remain for this baseline.
 
-The concrete contents of the approval checkpoint guide are an integration-architecture concern. They will be proposed from the design decision, this operating model, and observed process measurements, not left as an open questionnaire.
+The concrete contents of the approval checkpoint guide are defined in the integration architecture.
+
+v1 of this workstream is complete when the decision and implementation pipeline works in this repository and has been validated by creating and testing agents. Export packaging for other repositories is an eventual goal, not a current completion criterion.

@@ -187,6 +187,6 @@ Future integration decisions may refine terminology, combine responsibilities, a
 
 The [Agent-Assisted Development Operating Model Baseline](../planning/0001-operating-model-baseline.md) records the authoritative business and operating context that constrains integration planning.
 
-The [Integration Architecture](../planning/0002-integration-architecture.md) is the next design checkpoint. It defines documents, responsibilities, handoffs, gates, and the agent products to develop. Models, prompts, file schemas, and runtime wiring remain implementation-plan concerns.
+The [Integration Architecture](../planning/0002-integration-architecture.md) is accepted for v1. The [Implementation Plan](../planning/0003-implementation-plan.md) is the current build sequence.
 
-A later implementation plan will translate the accepted architecture into repository structures, workflow mechanics, agent interactions, schemas, validation commands, and adoption stages. During that work, minor refinements to this design are acceptable when recorded explicitly, but the design invariants above remain the checkpoint against which those refinements will be evaluated.
+v1 completion is a working decision and implementation pipeline in this repository, validated by creating and testing agents. Packaging this workstream for clean use in other repositories is an **eventual** goal of this design. It is not a current implementation-plan acceptance criterion.

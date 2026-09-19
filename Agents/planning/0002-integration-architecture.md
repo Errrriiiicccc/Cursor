@@ -1,25 +1,24 @@
 # Integration Architecture 0002: Agent-Assisted Development
 
-- **Status:** Draft architecture; binding where stated, pending owner answers marked inline
+- **Status:** Accepted for v1 implementation
 - **Date:** 2026-09-19
 - **Depends on:**
   - [Design Decision 0001](../design-decisions/0001-agent-assisted-development-workstream.md)
   - [Operating Model Baseline 0001](0001-operating-model-baseline.md)
+- **Implemented by:** [Implementation Plan 0003](0003-implementation-plan.md)
 - **Purpose:** Define the system of documents, responsibilities, handoffs, gates, and agent products that realize the workstream
 
 ## How to use this document
 
-This architecture is the authorized integration shape for the workstream. It tells later implementation work what must exist and how the pieces relate. It does not select models, prompts, file schemas, directories, or orchestration tools.
+This architecture is the authorized integration shape for v1. Resolved statements are binding until formally superseded.
 
-Resolved architecture statements are binding until formally superseded. Text marked **Owner question** is not permission for a worker to invent a policy. If work reaches one of those points, it stops or uses only the surrounding resolved rule.
+The primary v1 product is a working decision and implementation pipeline, packaged as specialized agents, and validated by creating and testing agents in this repository.
 
-The primary near-term product of this architecture is a set of **specialized agents**. Those agents are the current packaging of durable responsibilities. Responsibilities remain the source of truth if an agent is later split, merged, or replaced.
-
-The design decision omitted an agent roster on purpose: naming agents that early would have frozen packaging before the workstream shape existed. This document is past that point. It must name the agents to create. The implementation plan will take that roster as the build list and may refine packaging only through an explicit document change.
+Portability to other repositories is an eventual design goal. It is not a v1 completion criterion and is out of scope for the current implementation plan.
 
 ## 1. Purpose and standing
 
-This document translates the design decision and operating model into an operable system. It exists so later agent work has a stable map:
+This document translates the design decision and operating model into an operable system:
 
 - what records must exist;
 - which responsibility owns each decision;
@@ -27,26 +26,31 @@ This document translates the design decision and operating model into an operabl
 - which agent products to build first; and
 - when work may proceed, must stop, or must wait for the owner.
 
-It is not a general-purpose autonomous developer. A single agent that analyzes, plans, implements, tests, and reviews its own work is out of scope. That pattern is the failure mode this system is being built to avoid.
+It is not a general-purpose autonomous developer. A single agent that analyzes, plans, implements, tests, and reviews its own work is out of scope.
 
-It is also not an implementation plan. Exact Cursor configuration, prompt text, repository folder layout, and runtime wiring come after this architecture is accepted.
+This repository is the first product. Its documents, agent contracts, and Cursor adapter files are the codebase. They receive the same seriousness as application code.
+
+### Current completion versus eventual export
+
+**v1 is complete when** the pipeline can take a request through specification, planning, bounded implementation, validation, and review, and that pipeline has been used to create and test agents here.
+
+**v1 is not waiting on** a clean export kit, install guide, or repo adapter for other projects. That work remains represented as a later goal in the design decision. It must not appear in v1 acceptance criteria.
 
 ## 2. System view
-
-The system has four planes. They may be implemented by one or many model invocations, but they must remain distinguishable.
 
 ```text
 Owner request
     │
     ▼
 Control plane
-  Coordinator · Analyst · Planner · Owner Advocate
+  Coordinator · Analyst · Planner
+  Owner Advocate  ← owner-invoked anytime; process-invoked only on intent artifacts
     │
     ├── durable work records
     ├── persistent project knowledge
     ▼
 Execution plane
-  Implementation specialists · Validation Author
+  Agent Creator · later specialists
     │
     ▼
 Assurance plane
@@ -56,82 +60,61 @@ Assurance plane
 Owner merge review  →  main
 ```
 
-- The **control plane** understands the request, produces the specification and implementation plan, chooses which specialists to invoke, and packages each handoff.
-- The **execution plane** performs bounded implementation and writes intended validation.
-- The **assurance plane** checks evidence, challenges the result against the plan, and reconciles documentation.
+- The **control plane** understands the request, produces the specification and implementation plan, and packages each handoff.
+- The **Owner Advocate** attacks whether the goal and plan are the right ones. It does not run the factory and does not write the specification.
+- The **execution plane** performs bounded implementation, starting with Agent Creator in this repository.
+- The **assurance plane** checks evidence and reconciles documentation.
 - The **owner merge review** is the ordinary human review point for work that already meets its criteria.
 
-Persistent knowledge lives in repository documentation. Work records live with the change. Conversations are not the system of record.
+### Why Owner Advocate is in the stack
 
-### Review of the owner’s agent sketch
+Coordinator, Analyst, and Planner already try to serve owner intent. That is not the same job as attacking the owner’s framing.
 
-The owner’s sketch is directionally correct and is adopted with the following scrutiny.
+- Analyst **writes** the specification from the request. It should challenge unclear requests, but it is still the author of the artifact being judged.
+- Planner **routes** authorized intent. It must not reopen goals.
+- Independent Reviewer checks whether the **implementation** matches the specification. It does not ask whether the specification was the right problem.
 
-**Keep.** Separate high-level scoping from bounded implementation. Separate implementation from test authorship. Separate both from independent review. Keep a high-level critic that challenges the owner’s goals and choices. Activate specialists only for the step that needs them, with explicit context and success criteria.
+If no separate critic exists, the system will politely implement a weak request whenever the request is internally consistent. That is the failure mode the owner described from earlier one-agent work.
 
-**Do not keep as a first-wave split.** Do not create a fourth control-plane agent whose only job is “decide agents and context for each step.” That is the Planner’s contract. A Coordinator then executes that plan. Splitting planning from context-packaging immediately recreates overlapping high-level agents and extra handoff cost. Split later only if measurement shows planning and packaging are failing for different reasons.
+Owner Advocate is therefore kept, with a narrow charter:
 
-**Do not treat every responsibility as a permanently separate runtime agent.** The first products should be separately testable agent definitions. In operation, one model may perform more than one responsibility if and only if it does so in a fresh, role-specific invocation with only that role’s context. Combining roles in one invocation is a process defect.
+- It decides nothing that executes the workstream.
+- The owner may invoke it at any time, with any context, in a more free-form mode than other agents.
+- The Coordinator also invokes it on intent artifacts only: a new or changed specification, a workstream-level implementation plan, a methodology or architecture change, and a Moment of Inconsistency.
+- It is not invoked on ordinary task contracts or on implementation revisions that do not change intent.
+- Findings are ranked by severity. High severity pauses the workstream. Lower severity is recorded and work continues.
 
-**Do not make the Owner Advocate the Coordinator.** An agent that both runs the workstream and impersonates the owner’s better judgment will approve its own sequencing. The critic must not own execution state.
-
-**Owner question:** The first product of this repository is a set of Cursor-exportable agent definitions and their contracts. Confirm that v1 is successful if those agents can run a small change through this workstream in this repository, even if later export packaging is still crude.
-
-Ans: I cannot see why that wouldn't be a good idea. I am a bit confused what "export packaging is still crude" actually means. Please answer what that means within the chat of me requesting you fold these answers into the document.
+This is in the stack because the gap is real. It is not a mandatory pause on every step, because that would duplicate Analyst and violate the speed and cost priorities.
 
 ## 3. Persistent knowledge and context maps
 
-Project understanding persists as documentation that a later worker can search and subset. It must map:
+Project understanding persists as documentation that a later worker can search and subset. The first context map describes this repository: design decision, operating model, architecture, implementation plan, agent contracts, Cursor adapters, and the files that realize them.
 
-- system concepts and boundaries;
-- responsibilities and specialists;
-- interfaces between those boundaries;
-- accepted decisions;
-- validation commands and expectations; and
-- the repository areas that realize each of the above.
+A context map is a routing document, not a dump of the repository. The Planner uses it to select the smallest sufficient context for a handoff.
 
-A context map is a routing document, not a dump of the repository. The Planner uses it to select the smallest sufficient context for a handoff. A specialist may receive:
-
-- the task contract;
-- the relevant interface and policy documents;
-- the listed files or areas; and
-- the success criteria and prohibited changes.
-
-A specialist may not receive the full workstream history, unrelated subsystem documentation, or another specialist’s internal reasoning.
-
-If a specialist cannot complete work because mapped context is missing, it reports a context defect. It does not scan the repository for additional authority.
-
-**Owner question:** For this methodology repository, should the first context map describe the workstream documents themselves (design decision, operating model, architecture, future agent contracts), rather than waiting for an application codebase to exist?
-
-Ans: The first context map should describe the workstream documents, yes. This is as much important (if not even MORE important) than any particular project. I say that, because this repository DIRECTLY effects the efficiency and usability of further projects. I believe that as we are starting up, this repository will be developed and refined a lot more than any other respositories, as it will serve as the guiding heart of all other repositories. as we make this heart healthier, we won't have to adjust it as much, but most agents we are making (other than, like, specialized agents) will be used to make this workstream better.
-
+A specialist may not receive the full workstream history, unrelated documents, or another specialist’s internal reasoning. If mapped context is missing, it reports a context defect. It does not scan the repository for additional authority.
 
 ## 4. Work records
 
-Every change carries a durable package. The information is authoritative; filenames and folder layout are deferred.
+Every change carries a durable package. The information is authoritative; filenames and folder layout belong to the implementation plan.
 
-| Record | Authority | Produced by | Used by |
-| --- | --- | --- | --- |
-| Request | Owner intent as initially stated | Coordinator | Analyst, Owner Advocate |
-| Discovery notes | Non-authoritative understanding | Analyst | Analyst, Planner |
-| Specification | Authorized intent for the change | Analyst | All downstream roles |
-| Assumptions | Explicit and reviewable | Any role, listed by the Coordinator | Reviewer, Owner |
-| Implementation plan | Authorized decomposition and specialist routing | Planner | Coordinator, specialists |
-| Task contract | Authorized scope for one step | Planner | One specialist or paired specialists |
-| Prototype record | Concrete exploration plus remaining ambiguity | Implementation specialist | Analyst, Owner Advocate, Reviewer |
-| Implementation report | What changed and what is uncertain | Implementation specialist | Reviewer, Validator, Finalizer |
-| Validation evidence | Actual command and check results | Validator | Reviewer, Coordinator |
-| Review findings | Disposition-bearing findings | Independent Reviewer, Security Analyst | Planner, specialists, Owner |
-| Efficiency summary | Compact process history | Coordinator | Later operating-model review |
-| Disposition | Completion state of the workstream | Coordinator | Owner merge review |
+Required information:
 
-The specification outranks the implementation plan. The plan outranks a task contract. A task contract outranks a specialist’s assumptions. None of them outrank a confirmed owner instruction that has been propagated through the authority order.
+- request;
+- specification;
+- assumptions;
+- implementation plan and task contracts;
+- prototype or implementation report;
+- validation evidence;
+- review findings;
+- efficiency summary; and
+- disposition.
 
-OWNER CALLOUT: I am afraid that these records are too explicit and too large. We do NOT need to decide on the best-practices of this immediately but I just want to call out that these seem a bit extreme and difficult to visually review. That being said, I don't want to say "CUT THIS DOWN" yet. I want to see it in action. 
+The specification outranks the implementation plan. The plan outranks a task contract. A task contract outranks a specialist’s assumptions.
+
+The owner has flagged that this package may be too large to review comfortably. That concern is accepted and deferred: v1 keeps the information, may combine records for readability, and does not cut fields until the pipeline has been seen in action.
 
 ## 5. Responsibilities and contracts
-
-These contracts are durable. Agent products later in this document are the first packaging of these contracts.
 
 ### Coordinator
 
@@ -142,10 +125,10 @@ These contracts are durable. Agent products later in this document are the first
 
 ### Analyst
 
-- **Receives:** request, mapped project context, owner answers, Owner Advocate challenges.
+- **Receives:** request, mapped project context, owner answers, and Owner Advocate findings when they exist.
 - **May decide:** problem framing, alternatives, recommended design, acceptance criteria, non-goals.
 - **Must produce:** specification, discovery notes, and identified uncertainties.
-- **Must not:** implement, treat a challenge as optional without recording it, or hide unknown domain facts.
+- **Must not:** implement, hide unknown domain facts, or treat a high-severity Owner Advocate finding as optional.
 
 ### Planner
 
@@ -156,18 +139,21 @@ These contracts are durable. Agent products later in this document are the first
 
 ### Owner Advocate
 
-This is the high-level critic requested by the owner. Informal name: **Ideal Eric**. Formal name: **Owner Advocate**.
+Informal name: **Ideal Eric**.
 
-- **Receives:** owner goals, request, specification, implementation plan, and material operating-model or architecture proposals.
+- **Receives:** whatever the owner provides, or the intent artifact the Coordinator attached.
 - **May decide:** nothing that executes the workstream. It may only challenge, recommend, or identify inconsistency.
-- **Must produce:** written scrutiny of goals, choices, missing criteria, hidden cost, and likely later regret.
-- **Must not:** implement, coordinate, approve its own plan, or soften a challenge to keep work moving.
+- **Must produce:** severity-ranked scrutiny of goals, choices, missing criteria, hidden cost, and likely later regret.
+- **Must not:** implement, coordinate, write the specification it is criticizing, or soften a high-severity finding to keep work moving.
 
-The Owner Advocate exists because the owner is using this system to become a stronger developer. It should assume the owner’s goals are real and still attack the chosen path.
+Owner-initiated invocations may be free-form. Process-initiated invocations stay attached to one intent artifact.
 
-**Owner question:** If the Owner Advocate issues a challenge, must the workstream pause until you respond, or may it continue while the challenge is recorded, except at the mandatory stop gates in section 7?
+### Agent Creator
 
-Ans: I do not know when this would occur. for example, the Owner Advocate, I thought, would be initiated by the Owner. During which, I'd assume no work is being done. nevertheless, it should rank its insights by severity. So if it determined there was a serious error that would cause insane inefficiencies, costs, etc, then this should be made clear as a big deal.
+- **Receives:** a task contract to author or revise an agent from an approved specification and plan.
+- **May decide:** local wording and Cursor-adapter mechanics that do not change the contract.
+- **Must produce:** the agent contract and, when in scope, the Cursor adapter file.
+- **Must not:** invent a new role, expand the roster, or rewrite process policy.
 
 ### Implementation specialist
 
@@ -175,6 +161,8 @@ Ans: I do not know when this would occur. for example, the Owner Advocate, I tho
 - **May decide:** local implementation choices that do not change the contract.
 - **Must produce:** the change, an implementation or prototype record, and explicit remaining ambiguity.
 - **Must not:** expand scope, redefine success, or “improve” the specification.
+
+A general implementation worker is **not** a v1 product. It is a later optional specialist for work that has no stack-specific agent.
 
 ### Validation Author
 
@@ -190,32 +178,24 @@ Ans: I do not know when this would occur. for example, the Owner Advocate, I tho
 - **Must produce:** evidence: commands, outcomes, and what was not run.
 - **Must not:** interpret a failure as unimportant.
 
-This responsibility may be a procedure rather than a conversational agent. It becomes an agent only when a result requires interpretation.
+This responsibility may be a procedure rather than a conversational agent.
 
 ### Independent Reviewer
 
-- **Receives:** specification, plan, diff, tests, and validation evidence. It does not receive the implementer’s rationale unless a finding requires it.
+- **Receives:** specification, plan, diff, tests, and validation evidence.
 - **May decide:** finding severity and whether a criterion is unmet.
 - **Must produce:** findings with evidence and recommended disposition.
 - **Must not:** rewrite the implementation, or accept work because the tests and code agree with each other.
 
 ### Security Analyst
 
-- **Receives:** the specification and the parts of a change that affect secrets, identity, permission sources, or external trust.
-- **May decide:** whether the security baseline is met and whether a permission mechanism change is materially different from a local policy change.
-- **Must produce:** a security finding or an explicit “no security concern in scope” note.
-- **Must not:** impose enterprise controls beyond the operating-model baseline, or treat identity sources as interchangeable.
+Consultative baseline only. It does not impose enterprise controls.
 
 ### Finalizer
 
-- **Receives:** the accepted implementation, evidence, and remaining documentation gaps.
-- **May decide:** documentation and small consistency repairs.
-- **Must produce:** aligned documents and a list of any material change that must return to implementation.
-- **Must not:** introduce new behavior under the label of documentation.
+Documentation and small consistency repairs. Material behavior changes return through implementation.
 
 ## 6. Lifecycle and handoffs
-
-Work moves through named states. The Coordinator is the only role that records a state change.
 
 ```text
 requested
@@ -226,7 +206,7 @@ requested
   → implementing
   → validating
   → reviewing
-  → revising          ← back to planned, implementing, or specified
+  → revising
   → reconciling
   → complete_pending_merge
   → merged
@@ -234,252 +214,133 @@ requested
 
 Additional states: `blocked_for_owner`, `blocked_for_diagnosis`, `delivered_with_deferred_validation`.
 
-| From | To | Entry condition | Required records | Exit condition |
-| --- | --- | --- | --- | --- |
-| requested | discovering | A request exists | Request | Analyst has enough mapped context to begin, or a context defect is recorded |
-| discovering | specified | Uncertainties that block intent are resolved or explicitly assumed | Specification, assumptions | Specification names criteria, non-goals, and residual unknowns |
-| specified | planned | Specification is authorized under section 7 | Implementation plan, task contracts | Each step names specialist, context, and success criteria |
-| planned | prototyped | The step is reversible | Prototype record with explicit ambiguity | Prototype is reviewable against the unanswered questions |
-| prototyped | implementing | Task contract remains valid | Updated task contract if needed | Specialist is executing authorized scope |
-| implementing | validating | Implementation report claims the contract is met or names a defect | Implementation report | Validation Author and Validator have artifacts to run |
-| validating | reviewing | Evidence exists, including omitted checks | Validation evidence | Independent Reviewer can compare plan, diff, and evidence |
-| reviewing | revising | Blocking findings exist, or the plan is wrong | Findings | Diagnosis names the failing layer: spec, plan, context, implementation, or integration |
-| reviewing | reconciling | No blocking findings remain | Findings with dispositions | Finalizer may align documents |
-| reconciling | complete_pending_merge | Documentation matches behavior, or residual doc work is recorded as non-blocking | Outcome summary, efficiency summary | Owner merge review is possible |
-| complete_pending_merge | merged | Owner reviews or requests analysis and merges to `main` | Merge decision | Workstream is closed |
+The Coordinator is the only role that records a state change. Implementation and review may repeat only after diagnosis.
 
-A reversible prototype is the default after planning. The prototype is a concrete artifact, not a second conversation. Ambiguity left in the specification must appear in the prototype record.
+### Prototype ownership
 
-Implementation and review may repeat only after diagnosis. The loop is `reviewing → revising → (planned or implementing or specified) → ...`. It is not “try again until the reviewer is content.”
+The role that proposes executing a prototype owns that proposal. It must state:
+
+- why a prototype is needed;
+- what ambiguity the prototype will make concrete; and
+- severity: high or ordinary.
+
+A high-severity prototype direction that is not already in the specification is a control-plane failure. Do not prototype it. Return to Analyst, and invoke Owner Advocate on the revised intent.
+
+An ordinary prototype proceeds with the ambiguity written down. Later review may reject the direction. The workstream does not stop for every technical preference.
 
 ## 7. Approval checkpoint guide
 
-This guide is specific and will be tuned later by two measurements: too many owner interruptions, or too few.
-
 ### Proceed without waiting
 
-These create a reversible prototype or bounded implementation, with ambiguity written down:
-
-- ordinary feature, refactor, documentation, or test work;
-- ambiguous product behavior that can be shown in a disposable prototype;
-- architectural exploration that does not replace the accepted architecture;
-- local authorization or permission-logic experiments;
-- draft public-interface sketches that are not published; and
-- compatibility experiments that do not ship or migrate durable data.
+Ordinary reversible work and disposable prototypes, with ambiguity written down.
 
 ### Stop before implementation
 
-Do not implement, and do not prototype against a real external effect, when the next action would:
+Do not take an irreversible external action: destroy non-disposable data, publish a permanent interface, spend material paid resources, persist a secret, or change authentication on a non-disposable system. A local disposable prototype that cannot cause those effects may still be created.
 
-- destroy or migrate non-disposable data;
-- publish or permanently change a public interface;
-- spend material paid resources;
-- expose or persist a secret;
-- change authentication or authorization on a non-disposable system; or
-- otherwise be unreasonable to reverse from this workspace and Git history.
-
-A local, disposable prototype that cannot cause those effects may still be created. The stop applies to the irreversible action, not to thinking in code.
-
-### Owner confirmation required before the workstream continues
+### Owner confirmation required
 
 - A Moment of Inconsistency.
 - A change to this architecture, the operating model, or a design invariant.
 - A change to an already authorized specification’s intent.
 - Acceptance of `delivered_with_deferred_validation`.
-- Crossing from a disposable prototype into one of the stop-before-implementation actions.
+- Crossing from a disposable prototype into a stop-before-implementation action.
+- A high-severity Owner Advocate finding.
 
 ### Ordinary completion
 
-If acceptance criteria and required controls are met, the workstream becomes `complete_pending_merge`. No additional owner approval is required to call the work complete. The owner reviews at merge to `main`, personally or with agent-assisted analysis.
-
-**Owner question:** If a prototype is cheap and reversible, but you are likely to dislike the product direction, do you still want the workstream to prototype first and show you the artifact, rather than asking you to choose the direction in the abstract?
+If acceptance criteria and required controls are met, the workstream becomes `complete_pending_merge`. The owner reviews at merge to `main`.
 
 ## 8. Specialist integration
 
-A specialist is invoked only by a task contract. The contract must include:
+A specialist is invoked only by a task contract. The Coordinator remains responsible for the integrated result.
 
-- the outcome required;
-- the interface or policy it must honor;
-- the context map entries and files it may use;
-- success criteria;
-- validation expected from this step; and
-- changes it must not make.
-
-Repository-specific policy arrives as part of that contract. A Python specialist does not need the whole product history. A security analyst does not need unrelated feature notes.
-
-If two specialists propose incompatible local designs:
-
-- the Coordinator asks the Analyst whether the specification already decides the issue;
-- if it does, the Planner rewrites the losing task contract;
-- if it does not, the Analyst updates the specification, or the workstream blocks for the owner when the missing fact is a product or authority question.
-
-The Coordinator remains responsible for the integrated result. A specialist is responsible only for its contract.
-
-The first specialist family to standardize, after the control-plane agents, is the **general implementation worker** plus one concrete language specialist used as the template for others. Additional language specialists are copies of that template with their own infrastructure policies.
-
-**Owner question:** After the control-plane agents exist, should the first specialist template be a general implementation worker, a Python specialist, or a specialist that authors Cursor agents and workflow documents in this repository?
-
-Ans: I do not exactly know what a General Implementation Worker would look like. It kind of sounds too general for me to understand. I DO understand the concept of creating a baseline, so that makes sense, but I cant imagine what we would use them for. Nevertheless, I think it is inconsequential which we work on first. So use discretion.
+The first specialist is **Agent Creator**. Later language specialists, including Python, are created through the process after v1 control-plane agents exist. The next agent after Agent Creator will be chosen at the start of that end-to-end run.
 
 ## 9. Validation, dispositions, and completion
 
-Acceptance criteria belong to the specification. Validation procedures belong to the Validation Author. Evidence belongs to the Validator. Review compares all three with the actual change.
+| Disposition | Meaning |
+| --- | --- |
+| `complete_pending_merge` | Criteria and required controls are met |
+| `delivered_with_deferred_validation` | Required validation skipped with owner acceptance |
+| `blocked_for_owner` | Mandatory confirmation or missing owner fact |
+| `blocked_for_diagnosis` | Repeated failure or process defect |
+| Rejected / abandoned | Request withdrawn |
 
-| Disposition | Meaning | Merge implication |
-| --- | --- | --- |
-| `complete_pending_merge` | Criteria and required controls are met | Ordinary owner merge review |
-| `delivered_with_deferred_validation` | Required validation was skipped with owner acceptance | Owner already accepted the gap; omitted validation remains tracked work |
-| `blocked_for_owner` | A mandatory confirmation or missing owner fact | No merge |
-| `blocked_for_diagnosis` | Repeated failure or a process defect | No merge |
-| Rejected / abandoned | Owner or Analyst withdraws the request | Closed without merge |
-
-Blocking findings prevent `complete_pending_merge`. Non-blocking findings are recorded for later work and do not prevent that state.
-
-Tests that merely agree with the implementation are not sufficient evidence. The Independent Reviewer must say whether the tests cover the specification.
+v1 completion of the **system**, as opposed to one workstream, means the pipeline has created and tested agents here. Export packaging is not part of that disposition.
 
 ## 10. Failure, retry, and escalation
 
-Repeated failure is a diagnosis problem. The Coordinator must classify the defect before another implementation attempt:
+The Coordinator classifies a defect before another implementation attempt:
 
-| Suspected defect | Next action |
-| --- | --- |
-| Specification wrong or incomplete | Return to Analyst; Owner Advocate reviews the revised intent |
-| Plan too large or poorly routed | Return to Planner |
-| Context missing or excessive | Repair the context map and task contract |
-| Specialist capability mismatch | Reshape the task or change specialist; do not blindly retry |
-| Implementation error | New implementing invocation with the same contract and the finding |
-| Integration error across specialists | Analyst or Planner repairs the boundary; specialists do not negotiate privately |
-| Process itself is too slow, costly, or low-confidence | Record the concern; do not let a worker rewrite the methodology |
+| Class | Meaning | Next action |
+| --- | --- | --- |
+| Specification | Intent or criteria are wrong or incomplete | Return to Analyst; Owner Advocate on the revised intent |
+| Plan | Decomposition or routing is wrong | Return to Planner |
+| Context | Mapped context was missing or excessive | Repair the context map and task contract |
+| Capability | The specialist cannot do this contract | Reshape the task or change specialist |
+| Implementation | The change does not meet the contract | New implementing invocation with the finding |
+| Integration | Specialists met local contracts but the whole does not | Analyst or Planner repairs the boundary |
+| Process | Cost, speed, or confidence in the methodology is low | Record the concern; do not rewrite the methodology |
 
-No numeric retry limit is set yet. The deferred operating-model item for thresholds remains deferred. Until a number exists, a second consecutive failure of the same class requires diagnosis notes, and a third requires `blocked_for_diagnosis` or owner visibility before more spend.
+Detail tags may be added under a class after evidence exists. Two useful tags, once implementation work begins:
 
-**Owner question:** Is “third consecutive failure of the same class pauses for your visibility” an acceptable temporary rule until cost data exists, or do you want a cheaper stop (pause after two) while this is still an experiment?
+- `ecosystem-shape`: the change matched the design but missed surrounding systems;
+- `output-mismatch`: the change fit the codebase but missed the plan.
 
-Ans: That is a fine baseline. I think that "of the same class" is a bit ambiguous, and should probably be defined depending on the level. For example, at a technical level (python, sql) I would roughly outline these classes (as I understand it) as being "misunderstood shape of the ecosystem" = attempted to write code that doesn't integrate with the systems surrounding it, but the implementation matched the design, "output differed from design" = wasn't inconsistent with the code base, but the output doesn't match what was outlined in the plan. 
+Do not expand this taxonomy before the pipeline has produced real failures.
 
-Follow-up: I re-read the #10 section again, I rushed to write an answer. I suppose you did already outline classes, but I think that it could still be refined/expanded in more detail. The more detail about class of errors that occur, the easier we can iterate on the current operating procedures and define where gaps are. 
+Until numeric thresholds exist: a second consecutive failure of the same class requires diagnosis notes; a third pauses for owner visibility.
 
 ## 11. Authority, inconsistency, and change control
 
-The operating-model authority order applies unchanged. In this architecture it is used as follows:
+The operating-model authority order applies unchanged. A new owner instruction is executable only after confirmation, a Moment of Inconsistency record, and an update to the affected document.
 
-1. The Coordinator detects a conflict and stops the affected boundary.
-2. The Owner Advocate writes the inconsistency if owner intent and an accepted document disagree.
-3. The owner confirms the new instruction.
-4. The affected authoritative document is updated.
-5. Only then do Planner and specialists resume.
-
-Workers follow the approved context they have. If they believe that context is inefficient, costly, or wrong, they report it. They do not treat “this might change later” as license to change it now.
-
-Methodology changes are a workstream of their own: Analyst and Owner Advocate, owner confirmation, document update, then new agent contracts if needed.
+Workers follow approved context. If they believe it is inefficient, costly, or wrong, they report it. They do not treat future revision as license to change it now.
 
 ## 12. Measurements
 
-The Coordinator’s efficiency summary must make these recoverable later without storing full transcripts:
-
-- elapsed time in each state;
-- model invocations by responsibility;
-- estimated cost, when the runtime can supply it;
-- implementation-review cycle count;
-- discarded or repeated work;
-- owner interruptions and waits;
-- approval-checkpoint hits, including unnecessary stops;
-- validation attempted, passed, failed, or deferred;
-- findings by disposition; and
-- defect class from section 10.
-
-These measurements exist to tune the checkpoint guide and the agent roster. They do not grade agents for minimizing a number.
+The efficiency summary must later support elapsed time, invocation counts, estimated cost, cycle count, discarded work, owner waits, checkpoint hits, validation outcomes, finding dispositions, and section 10 classes. Thresholds remain deferred.
 
 ## 13. Agent products to develop and test
 
-This roster is now required. Later implementation work creates these agents; it does not reopen whether a set should exist.
+### First wave — hand-authored
 
-This is the current packaging of the contracts above. It is a build sequence. An agent product may later be split or merged if measurement requires it, but that is a controlled change, not an informal rewrite.
+| Agent product | Contract |
+| --- | --- |
+| Coordinator | State, handoffs, gates, diagnosis routing |
+| Analyst | Discovery and specification |
+| Planner | Implementation plan, specialist routing, context packaging |
+| Owner Advocate | Severity-ranked critique of goals and intent artifacts |
+| Agent Creator | Author agent contracts and Cursor adapters from a task contract |
 
-### First wave — control plane
+The owner will be helped to hand-author these. Not knowing Cursor agent file format is expected; the implementation plan defines the files.
 
-These are the first agents to define, test, and use on a small real change in this repository.
+### Second wave — created through the process
 
-| Agent product | Contract | Why it exists as its own product |
-| --- | --- | --- |
-| Coordinator | State, handoffs, gates, diagnosis routing | Prevents a thinking agent from also running the factory |
-| Analyst | Discovery and specification | Keeps intent work separate from coding |
-| Planner | Implementation plan, specialist routing, context packaging | Turns a spec into bounded activations |
-| Owner Advocate (Ideal Eric) | Challenge owner goals and control-plane decisions | Prevents the system from politely implementing a weak plan |
+The first end-to-end run uses the hand-authored control plane and Agent Creator to create the next agent. That next agent is chosen at the start of the run, not now.
 
-### Second wave — assurance and execution
+After that run, one review workstream inspects the whole pipeline against the high-level goals. Targeted per-agent reviews are allowed only after that whole-run review, and only if the findings need them.
 
-| Agent product | Contract | Why it exists as its own product |
-| --- | --- | --- |
-| Independent Reviewer | Findings against spec, plan, and evidence | Must not share the implementer’s working memory |
-| Validation Author | Tests and procedures mapped to criteria | Prevents the implementer from grading its own homework |
-| Validator | Actual evidence | Prefer a procedure; promote to an agent only if interpretation is required |
-| Implementation Worker | Bounded general coding against a task contract | Lowest-cost execution experiment |
-| Finalizer | Documentation and consistency | Prevents review from turning into silent redesign |
+### Later
 
-### Third wave — specialists
+Independent Reviewer, Validation Author, Validator, Finalizer, Security Analyst, language specialists, and a general implementation worker. Independent Reviewer should be created early in the second wave if the first end-to-end run would otherwise make Agent Creator review its own work.
 
-| Agent product | Contract | Why it exists as its own product |
-| --- | --- | --- |
-| Language specialist template, starting with one concrete specialist | Implementation under that stack’s local policies | Supports the “separate team” model without a general coder inventing stack policy |
-| Security Analyst | Baseline security and identity-source scrutiny | Required by the operating model; consultative, not an enterprise security program |
-| Additional language or domain specialists | Same as the template | Created only when a real task needs one |
+### Agent test bar
 
-### Testing the agents
+An agent product is testable when it can be invoked with only its contract, refuses out-of-scope work, produces the required record, and does not inherit another role’s reasoning.
 
-Each agent product is testable when:
+## 14. Non-goals for this architecture’s v1 path
 
-- it can be invoked with only its contract and sample context;
-- it refuses work outside that contract;
-- it produces the required record; and
-- a second invocation in a different role does not inherit its reasoning.
+The implementation plan may choose file paths and Cursor wiring. It still must not treat the following as v1 scope:
 
-The first end-to-end test is a small documentation or agent-contract change in this repository, run through Coordinator → Analyst → Planner → Implementation Worker → Validation Author → Validator → Independent Reviewer → Finalizer, with Owner Advocate challenging the specification and plan.
-
-**Owner question:** Do you want that first end-to-end test to be a documentation change, or the creation of the next agent’s contract, so the system is immediately used to build its own agents?
-
-Ans: As soon as is possible, I want to begin utilizing the agents to create the other agents. And, all of the agents should be reviewed utilizing the process. I do think that one of the first specialized agents should be an Agent Creator. That way we can utilize the process end-to-end. In-fact, this repositories main goal itself is to integrate AI into workstreams in a way that is cohesive and thoughtful. that means that one of the integration specialists would be an Agent Creator agent. So, I think that we should try to make that agent as soon as possible. 
-
-To further describe what I mean by "reviewed utilizing the process" I mean that once we are complete, we should actually use the process end-to-end to, say, create a Python agent. And then, we put in a request to scrutinize the creation of the python agent, identify through the process for inefficiencies, ensure all of the agents are performing properly and their methods all align with original high level goals, and perform necessary changes from the findings.
-
-A separate way to do this would be to instead, once the end-to-end is done, put in multiple requests in a row. "Request: Analyze inefficiencies in the Coordinator Agent" and then " in the Analyst" etc. etc.
-
-JUST TO NOTE, AS YOU SHOULD BE ALREADY, SCRUTINIZE THIS IDEA. This is just me thinking aloud, but I am doing it so that I can make sure all of my worries are answered. If you have a better idea, or if you think that this would be too early to do a review, then please inform me of that in the chat outside of htis document.
-
-## 14. Non-goals and deferred mechanics
-
-This architecture does not decide:
-
-- model vendors or specific model names;
-- prompt text;
-- exact file paths, schemas, or document templates;
-- Cursor feature wiring;
-- numeric cost or duration thresholds beyond the temporary diagnosis pause in section 10; or
+- export packaging or install kits for other repositories;
+- numeric cost or duration thresholds beyond the temporary diagnosis pause;
+- a general implementation worker;
 - whether a stronger analysis model may implement difficult work.
-
-Those belong to a later implementation plan, which may begin only after the owner questions in this document are resolved or explicitly deferred.
 
 ## Outstanding questions
 
-These are the same owner questions placed inline above, collected for answering.
+No owner-level questions remain for this architecture.
 
-1. **v1 success:** Is v1 successful if Cursor-exportable agents can run a small change through this workstream in this repository, even if later export packaging is still crude?
-Ans: Yes, but again, define export packaging is still crude
-
-2. **First context map:** Should the first context map describe these workstream documents, rather than waiting for an application codebase?
-Ans: One hundred percent yes. This is effectively an application codebase, however, the code are text files, and agent files, and whatever filetypes are needed for our purposes. But, for all intents and purposes, this is as important if not more important than any other project, and should be treated with that level of respect.
-
-3. **Owner Advocate pause:** Does an Owner Advocate challenge pause the workstream until you respond, or is a recorded challenge enough except at mandatory stop gates?
-Ans: Depends on severity, as described above
-
-4. **Unliked but reversible direction:** Should a cheap reversible prototype be created before you choose product direction in the abstract?
-Ans: It depends on the scope of how unliked it is. If it is fundamentally wrong, then it should already have been flagged for re-review. However, if it is minor, then it is sufficient for it to be called out, and then the review can happen after. I don't want to get bogged down in technicals at every single step, instead, it can be re-evaluated from a higher level once it is finished. But again, if it has large ramifications that aren't already called out in the scoping documents/implementation plan, that means that there's been a high-level failure in the design/request.
-
-5. **First specialist after the control plane:** General implementation worker, Python specialist, or a specialist that authors Cursor agents and workflow documents here?
-Ans: Undecided. Review my above answer in-line, and we should discuss.
-
-6. **Temporary retry pause:** Is pausing for your visibility after three consecutive failures of the same class acceptable until cost data exists?
-Ans:Completely acceptable
-
-7. **First end-to-end test:** Documentation change, or using the workstream to write the next agent’s contract?
-Ans:please read what I have wrote above in-line, and we should discuss our thoughts.
+The next agent after Agent Creator is intentionally undecided until that end-to-end run begins.
