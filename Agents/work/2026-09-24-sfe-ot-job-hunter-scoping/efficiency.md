@@ -114,3 +114,15 @@
 | **Owner action** | Authorize or reject/revise `plan.md`; confirm execution mode (recommended: **M-agents-spec**) |
 | **After clear** | Record mode → open sibling execution folder if needed → Analyst Step 1 only |
 | **Notes** | Spec stays authorized. G1 Strict intact. D1 map gap residual unchanged. No product files written. |
+
+## 2026-10-07 — Resume: owner status / continue (pause holds)
+
+| Field | Value |
+| --- | --- |
+| **Invoked** | none |
+| **Why stop** | Owner asked where the SFE work stands and said he wants to continue. That sentence is status/continue intent only. Plan authorization is still **pending owner**. Execution mode (D1) is still **not recorded**. Coordinator must not treat the message as plan authorization or as a choice of M-agents-spec / M-owner / M-exception. |
+| **Skipped** | Analyst / Step 1, Planner, Owner Advocate, Agent Creator, opening `Agents/work/2026-09-24-sfe-ot-first-pass-execution/`, any `Projects/…` write, edits to `specification.md` or `plan.md` |
+| **Stopped / continued** | **pause_for_owner** |
+| **Owner action** | Authorize or reject/revise `plan.md`; confirm execution mode (recommended: **M-agents-spec**) |
+| **After clear** | Record mode → open sibling execution folder if needed → Analyst Step 1 only |
+| **Notes** | Spec stays authorized. G1 Strict intact. D1 map gap residual unchanged. No product files written. |
